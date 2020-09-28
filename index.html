@@ -29,10 +29,28 @@
     <script>
         new FormValidator('form',[{
             fieldId: 'exampleInputEmail1',
+            rules: 'preventCapture',
+            filterName: 'alpha'
         },
         {
             fieldId: 'exampleInputPassword1',
+            rules: '',
+            filterName: ''
         }]);
+    </script>
+    <ul id="menu">
+        <li>Home</li>
+        <li>About</li>
+        <li>Contact</li>
+    </ul>
+    <script>
+        let menu = document.getElementById('menu');
+        // create a new li node
+        let li = document.createElement('li');
+        li.textContent = 'Services';
+
+        // insert a new node after the first list item
+        menu.insertBefore(li, menu.firstElementChild.nextSibling);
     </script>
 </body>
 </html>

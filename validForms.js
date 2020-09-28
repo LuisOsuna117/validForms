@@ -1,43 +1,107 @@
 (function (window, document, undefined) {
 
     /*
-     * Define the regular expressions that will be used
-     */
-
-    var ruleRegex = /^(.+?)\[(.+)\]$/,
-        numericRegex = /^[0-9]+$/,
-        integerRegex = /^\-?[0-9]+$/,
-        decimalRegex = /^\-?[0-9]*\.?[0-9]+$/,
-        emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-        alphaRegex = /^[a-z]+$/i,
-        alphaNumericRegex = /^[a-z0-9]+$/i,
-        alphaDashRegex = /^[a-z0-9_\-]+$/i,
-        naturalRegex = /^[0-9]+$/i,
-        naturalNoZeroRegex = /^[1-9][0-9]*$/i,
-        ipRegex = /^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})$/i,
-        base64Regex = /[^a-zA-Z0-9\/\+=]/i,
-        numericDashRegex = /^[\d\-\s]+$/,
-        urlRegex = /^((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)|)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/,
-        dateRegex = /\d{4}-\d{1,2}-\d{1,2}/;
-    
-    /*
     * The exposed public object to validate a form:
     *
-    * @param formNameOrNode - String - The name attribute of the form (i.e. <form name="myForm"></form>)
+    * @param formName - String - The name attribute of the form (i.e. <form name="myForm"></form>)
     * @param fields - Array - [{
-    *     fieldId: The name of the element (i.e. <input name="myField" />)
-    *     display: 'Field Name'
-    *     rules: required|matches[password_confirm]
+    *     fieldId: 'Field ID'
+    *     fieldName: 'Field Name'
+    *     filterName: 'alpha'
+    *     rules: 'required|matches[password_confirm]'
     * }]
     */
-    
+
     var FormValidator = function (formName, fields) {
         this.form = document.forms[formName];
-        console.log(form);
-        for (var i = 0; i < fields.length; i++){
-            document.getElementById(fields[i].fieldId).addEventListener()
+        this.fields = fields;
+        for (var i = 0; i < fields.length; i++) {
+            document.getElementById(fields[i].fieldId).addEventListener('keypress', _checkInput, false);
         }
+
+        function _checkInput(e) {
+            console.log(e);
+            var fieldId = e.target.id;
+            var field = document.getElementById(fieldId);
+            for (var i = 0; i < fields.length; i++) {
+                if (fields[i].fieldId == fieldId) {
+                    var rules = fields[i].rules.split("|");
+                    var filter = fields[i].filterName;
+                    for (var i = 0; i < rules.length; i++){
+                        switch (rules) {
+                            case 'required':
+                                field.setAttribute("required", "");
+                                break;
+                            case 'preventCapture':
+                                switch (filter) {
+                                    case 'alpha':
+                                        if (e.charCode != 32) {
+                                            if ((e.charCode < 97 || e.charCode > 122) &&
+                                                (e.charCode < 65 || e.charCode > 90)) {
+                                                e.preventDefault();
+                                            }
+                                        }
+                                        break;
+                                    case 'alphaNumeric':
+                                        if (e.charCode != 32) {
+                                            if ((e.charCode < 97 || e.charCode > 122) &&
+                                                (e.charCode < 65 || e.charCode > 90) &&
+                                                (e.charCode < 48 || e.charCode > 57)) {
+                                                e.preventDefault();
+                                            }
+                                        }
+                                        break;
+                                    case 'numeric':
+                                        if (e.charCode != 32) {
+                                            if (e.charCode < 48 || e.charCode > 57) {
+                                                e.preventDefault();
+                                            }
+                                        }
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case 'visualFeedback':
+                                switch (filter) {
+                                    case 'alpha':
+                                        if (e.charCode != 32) {
+                                            if ((e.charCode < 97 || e.charCode > 122) &&
+                                                (e.charCode < 65 || e.charCode > 90)) {
+                                                e.preventDefault();
+                                            }
+                                        }
+                                        break;
+                                    case 'alphaNumeric':
+                                        if (e.charCode != 32) {
+                                            if ((e.charCode < 97 || e.charCode > 122) &&
+                                                (e.charCode < 65 || e.charCode > 90) &&
+                                                (e.charCode < 48 || e.charCode > 57)) {
+                                                e.preventDefault();
+                                            }
+                                        }
+                                        break;
+                                    case 'numeric':
+                                        if (e.charCode != 32) {
+                                            if (e.charCode < 48 || e.charCode > 57) {
+                                                e.preventDefault();
+                                            }
+                                        }
+                                    default:
+                                        break;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+        };
     };
+
+
+
+
     window.FormValidator = FormValidator;
 })(window, document);
 
