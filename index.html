@@ -27,23 +27,29 @@
     </form>
     <script src="validForms.js"></script>
     <script>
+        function action(){
+            console.log("Hola");
+        }
         new FormValidator('form',[{
             fieldId: 'exampleInputEmail1',
-            rules: 'preventCapture',
-            filterName: 'alpha'
+            rules: 'required|preventCapture',
+            filterName: 'numeric',
         },
         {
             fieldId: 'exampleInputPassword1',
             rules: '',
             filterName: ''
-        }]);
+        }], function () {
+            console.log("Hola");
+        });
     </script>
-    <ul id="menu">
+    <!--ul id="menu">
         <li>Home</li>
         <li>About</li>
         <li>Contact</li>
     </ul>
     <script>
+        
         let menu = document.getElementById('menu');
         // create a new li node
         let li = document.createElement('li');
@@ -51,6 +57,6 @@
 
         // insert a new node after the first list item
         menu.insertBefore(li, menu.firstElementChild.nextSibling);
-    </script>
+    </script-->
 </body>
 </html>
