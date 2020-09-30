@@ -29,17 +29,17 @@
                     case 'preventCapture':
                         switch (fields[i].filterName) {
                             case 'alpha':
-                                document.getElementById(fields[i].fieldId).addEventListener('keypress', function(e) {
+                                document.getElementById(fields[i].fieldId).addEventListener('keydown', function(e) {
                                     _checkInput(e,'alpha');
                                 }, false);
                                 break;
                             case 'alphaNumeric':
-                                document.getElementById(fields[i].fieldId).addEventListener('keypress', function(e) {
+                                document.getElementById(fields[i].fieldId).addEventListener('keydown', function(e) {
                                     _checkInput(e,'alphaNumeric');
                                 }, false);
                                 break;
                             case 'numeric':
-                                document.getElementById(fields[i].fieldId).addEventListener('keypress', function(e) {
+                                document.getElementById(fields[i].fieldId).addEventListener('keydown', function(e) {
                                     _checkInput(e,'numeric');
                                 }, false);
                                 break;
@@ -54,27 +54,28 @@
             }
         }
         function _checkInput(e,filter) {
+            console.log(e);
             switch (filter) {
                 case 'alpha':
-                    if (e.charCode != 32) {
-                        if ((e.charCode < 97 || e.charCode > 122) &&
-                            (e.charCode < 65 || e.charCode > 90)) {
+                    if (e.keyCode != 32 && e.keyCode != 8) {
+                        if ((e.keyCode < 97 || e.keyCode > 122) &&
+                            (e.keyCode < 65 || e.keyCode > 90)) {
                             e.preventDefault();
                         }
                     }
                     break;
                 case 'alphaNumeric':
-                    if (e.charCode != 32) {
-                        if ((e.charCode < 97 || e.charCode > 122) &&
-                            (e.charCode < 65 || e.charCode > 90) &&
-                            (e.charCode < 48 || e.charCode > 57)) {
+                    if (e.keyCode != 32 && e.keyCode != 8) {
+                        if ((e.keyCode < 97 || e.keyCode > 122) &&
+                            (e.keyCode < 65 || e.keyCode > 90) &&
+                            (e.keyCode < 48 || e.keyCode > 57)) {
                             e.preventDefault();
                         }
                     }
                     break;
                 case 'numeric':
-                    if (e.charCode != 32) {
-                        if (e.charCode < 48 || e.charCode > 57) {
+                    if (e.keyCode != 32 && e.keyCode != 8) {
+                        if (e.keyCode < 48 || e.keyCode > 57) {
                             e.preventDefault();
                         }
                     }

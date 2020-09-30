@@ -25,15 +25,12 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    <script src="validForms.min.js"></script>
+    <script src="validForms.js"></script>
     <script>
-        function action(){
-            console.log("Hola");
-        }
         new FormValidator('form',[{
             fieldId: 'exampleInputEmail1',
             rules: 'required|preventCapture',
-            filterName: 'numeric',
+            filterName: 'alpha',
         },
         {
             fieldId: 'exampleInputPassword1',
