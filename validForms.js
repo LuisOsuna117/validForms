@@ -88,9 +88,11 @@
                     }
                     break;
                 case "numeric":
-                    if (!numeric.includes(e.data) && e.data != null) {
+                    field.value = field.value.replaceAll(" ","");
+                    if (!numeric.includes(e.data) && e.data != null && e.data != " ") {
                         field.value = field.value.slice(0, -1);
                     }
+                    break;
                 default:
                     break;
             }
