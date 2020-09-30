@@ -71,7 +71,6 @@
             }
         }
         function _checkInput(e, filter) {
-            console.log(e.data);
             var field = document.getElementById(e.target.id);
             var alpha = "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
             var alphaNumeric = "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
@@ -88,7 +87,6 @@
                     }
                     break;
                 case "numeric":
-                    field.value = field.value.replaceAll(" ","");
                     if (!numeric.includes(e.data) && e.data != null && e.data != " ") {
                         field.value = field.value.slice(0, -1);
                     }
